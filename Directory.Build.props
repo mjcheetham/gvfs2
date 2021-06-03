@@ -1,0 +1,12 @@
+<Project>
+
+  <!-- Import version props -->
+  <Import Project="Version.props" />
+
+  <PropertyGroup>
+    <RepoPath>$(MSBuildThisFileDirectory)</RepoPath>
+    <RepoSrcPath>$(RepoPath)</RepoSrcPath>
+    <RepoOutPath>$(RepoPath)..\out\</RepoOutPath>
+  </PropertyGroup>
+
+</Project>

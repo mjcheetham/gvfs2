@@ -1,0 +1,16 @@
+<Project>
+
+  <!-- Import parent Directory.Build.props file -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PlatformTarget>x64</PlatformTarget>
+    <PlatformSrcPath>$(MSBuildThisFileDirectory)</PlatformSrcPath>
+    <PlatformOutPath>$(RepoOutPath)managed\</PlatformOutPath>
+    <ProjectOutPath>$(PlatformOutPath)$(MSBuildProjectName)\</ProjectOutPath>
+    <BaseOutputPath>$(ProjectOutPath)bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(ProjectOutPath)obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+</Project>
