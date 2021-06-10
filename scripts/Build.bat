@@ -24,16 +24,6 @@ msbuild %VFS_SRCDIR%\GVFS.sln ^
         /t:Build ^
         /p:Configuration=%CONFIGURATION% || GOTO ERROR
 
-mkdir %VFS_PUBLISHDIR%
-
-ECHO Publishing FastFetch standalone...
-dotnet publish ^
-    %VFS_SRCDIR%\GVFS\FastFetch ^
-    -c %CONFIGURATION% ^
-    -o %VFS_PUBLISHDIR%\FastFetch ^
-    -r win-x64 ^
-    --self-contained || GOTO ERROR
-
 GOTO :EOF
 
 :USAGE

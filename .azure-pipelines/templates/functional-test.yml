@@ -1,0 +1,36 @@
+steps:
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download functional tests
+    inputs:
+      buildType: current
+      downloadType: specific
+      artifactName: FunctionalTests_$(configuration)
+      downloadPath: $(Build.BinariesDirectory)\tests
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download installers
+    inputs:
+      buildType: current
+      downloadType: specific
+      artifactName: Installer_$(configuration)
+      downloadPath: $(Build.BinariesDirectory)\install
+
+  - script: $(Build.BinariesDirectory)\install\install.bat $(configuration)
+    displayName: Run VFSForGit and G4W installers
+
+  - script: git config --global credential.interactive never
+    displayName: Disable interactive auth
+
+  - script: $(Build.BinariesDirectory)\tests\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs
+    displayName: Run functional tests
+
+  - task: PublishTestResults@2
+    displayName: Publish functional test results
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: "**\\TestResult*.xml"
+      searchFolder: $(System.DefaultWorkingDirectory)
+      testRunTitle: Functional Tests ($(configuration))
+      publishRunAttachments: true
+    condition: succeededOrFailed()

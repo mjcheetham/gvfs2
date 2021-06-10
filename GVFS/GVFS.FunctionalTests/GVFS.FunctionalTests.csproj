@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <OutputType>Exe</OutputType>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,15 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GVFS.Tests\GVFS.Tests.csproj" />
-    <ProjectReference Include="..\GVFS\GVFS.csproj" />
-    <ProjectReference Include="..\GVFS.Hooks\GVFS.Hooks.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\GVFS.Mount\GVFS.Mount.csproj" />
-    <ProjectReference Include="..\GVFS.Service\GVFS.Service.csproj" />
     <ProjectReference Include="..\GVFS.NativeTests\GVFS.NativeTests.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>

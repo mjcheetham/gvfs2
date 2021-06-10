@@ -3,36 +3,35 @@ CALL %~dp0\InitializeEnvironment.bat || EXIT /b 10
 
 IF "%1"=="" (SET "CONFIGURATION=Debug") ELSE (SET "CONFIGURATION=%1")
 
+REM Ensure GVFS installation is on the PATH for the Functional Tests to find
 SETLOCAL
 SET PATH=C:\Program Files\GVFS;C:\Program Files\Git\cmd;%PATH%
 
-IF NOT "%2"=="--test-gvfs-on-path" GOTO :startFunctionalTests
-
-REM Force GVFS.FunctionalTests.exe to use the installed version of GVFS
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GitHooksLoader.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.Hooks.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.ReadObjectHook.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.VirtualFileSystemHook.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.PostIndexChangedHook.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.Mount.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.Service.exe
-DEL %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.Service.UI.exe
-
 ECHO PATH = %PATH%
+
 ECHO gvfs location:
 where gvfs
+IF NOT %ERRORLEVEL% == 0 (
+    ECHO error: unable to locate GVFS on the PATH (has it been installed?)
+    EXIT /b 1
+)
+
 ECHO GVFS.Service location:
 where GVFS.Service
+IF NOT %ERRORLEVEL% == 0 (
+    ECHO error: unable to locate GVFS.Service on the PATH (has it been installed?)
+    EXIT /b 1
+)
+
 ECHO git location:
 where git
+IF NOT %ERRORLEVEL% == 0 (
+    ECHO error: unable to locate Git on the PATH (has it been installed?)
+    EXIT /b 1
+)
 
-:startFunctionalTests
-%VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.FunctionalTests.exe /result:TestResultNetFramework.xml %2 %3 %4 %5 || GOTO :endFunctionalTests
+%VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.FunctionalTests.exe /result:TestResult.xml %2 %3 %4 %5
 
-:endFunctionalTests
 SET error=%ERRORLEVEL%
-
 CALL %VFS_SCRIPTSDIR%\StopAllServices.bat
-
 EXIT /b %error%

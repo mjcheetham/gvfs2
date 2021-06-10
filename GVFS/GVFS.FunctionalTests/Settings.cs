@@ -32,7 +32,7 @@ namespace GVFS.FunctionalTests.Properties
 
             public static void Initialize()
             {
-                CurrentDirectory = Path.GetFullPath(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]));
+                CurrentDirectory = Path.GetFullPath(System.Reflection.Assembly.GetEntryAssembly()?.CodeBase);
 
                 RepoToClone = @"https://gvfs.visualstudio.com/ci/_git/ForTests";
 
@@ -43,35 +43,17 @@ namespace GVFS.FunctionalTests.Properties
                 // ProjFS is fixed and deployed to our build machines.
                 Commitish = @"FunctionalTests/20201014";
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    EnlistmentRoot = @"C:\Repos\GVFSFunctionalTests\enlistment";
-                    PathToGVFS = @"GVFS.exe";
-                    PathToGit = @"C:\Program Files\Git\cmd\git.exe";
-                    PathToBash = @"C:\Program Files\Git\bin\bash.exe";
+                EnlistmentRoot = @"C:\Repos\GVFSFunctionalTests\enlistment";
+                PathToGVFS = @"GVFS.exe";
+                PathToGit = @"C:\Program Files\Git\cmd\git.exe";
+                PathToBash = @"C:\Program Files\Git\bin\bash.exe";
 
-                    ControlGitRepoRoot = @"C:\Repos\GVFSFunctionalTests\ControlRepo";
-                    FastFetchBaseRoot = @"C:\Repos\GVFSFunctionalTests\FastFetch";
-                    FastFetchRoot = Path.Combine(FastFetchBaseRoot, "test");
-                    FastFetchControl = Path.Combine(FastFetchBaseRoot, "control");
-                    PathToGVFSService = @"GVFS.Service.exe";
-                    BinaryFileNameExtension = ".exe";
-                }
-                else
-                {
-                    string root = Path.Combine(
-                        Environment.GetEnvironmentVariable("HOME"),
-                        "GVFS.FT");
-                    EnlistmentRoot = Path.Combine(root, "test");
-                    ControlGitRepoRoot = Path.Combine(root, "control");
-                    FastFetchBaseRoot = Path.Combine(root, "FastFetch");
-                    FastFetchRoot = Path.Combine(FastFetchBaseRoot, "test");
-                    FastFetchControl = Path.Combine(FastFetchBaseRoot, "control");
-                    PathToGVFS = "gvfs";
-                    PathToGit = "/usr/local/bin/git";
-                    PathToBash = "/bin/bash";
-                    BinaryFileNameExtension = string.Empty;
-                }
+                ControlGitRepoRoot = @"C:\Repos\GVFSFunctionalTests\ControlRepo";
+                FastFetchBaseRoot = @"C:\Repos\GVFSFunctionalTests\FastFetch";
+                FastFetchRoot = Path.Combine(FastFetchBaseRoot, "test");
+                FastFetchControl = Path.Combine(FastFetchBaseRoot, "control");
+                PathToGVFSService = @"GVFS.Service.exe";
+                BinaryFileNameExtension = ".exe";
             }
         }
     }
