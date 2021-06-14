@@ -18,20 +18,27 @@ IF EXIST %OUTROOT% (
   rmdir /s /q %OUTROOT%
 )
 
-ECHO Collecting Installer...
+ECHO Collecting GVFS.Installers...
+echo %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\
 xcopy /S /Y ^
-    %VFS_BUILDDIR%\GVFS.Installer\bin\%CONFIGURATION% ^
-    %OUTROOT%\GVFS.Installer\ || GOTO ERROR
+    %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\ ^
+    %OUTROOT%\GVFS.Installers\ || GOTO ERROR
 
-ECHO Collecting FastFetch standalone...
+ECHO Collecting FastFetch...
 xcopy /S /Y ^
-    %VFS_BUILDDIR%\FastFetch\bin\%CONFIGURATION%\net461\win-x64 ^
+    %VFS_OUTDIR%\FastFetch\bin\%CONFIGURATION%\net461\win-x64\ ^
     %OUTROOT%\FastFetch\ || GOTO ERROR
 
-ECHO Collecting GVFS.FunctionalTests standalone...
+ECHO Collecting GVFS.FunctionalTests...
 xcopy /S /Y ^
-    %VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64 ^
+    %VFS_OUTDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\ ^
     %OUTROOT%\GVFS.FunctionalTests\ || GOTO ERROR
+
+ECHO Create installers NuGet package...
+mkdir %OUTROOT%\NuGetPackages
+PUSHD %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64
+nuget.exe pack GVFS.Installers.nuspec -OutputDirectory %OUTROOT%\NuGetPackages
+POPD
 
 GOTO :EOF
 

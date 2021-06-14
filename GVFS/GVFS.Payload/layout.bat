@@ -42,12 +42,6 @@ SET BUILD_OUT=%ROOT%\..\out
 SET MANAGED_OUT_FRAGMENT=bin\%CONFIGURATION%\net461\win-x64
 SET NATIVE_OUT_FRAGMENT=bin\x64\%CONFIGURATION%
 
-ECHO Building managed code...
-dotnet build %ROOT%\managed\GVFS.Managed.sln -c %CONFIGURATION% || GOTO ERROR
-
-ECHO Building native code...
-msbuild %ROOT%\native\GVFS.Native.sln /p:Configuration=%CONFIGURATION% || GOTO ERROR
-
 ECHO Copying files...
 xcopy /Y %PROJFS%\filter\PrjFlt.sys %OUTPUT%\Filter\
 xcopy /Y %PROJFS%\filter\prjflt.inf %OUTPUT%\Filter\
@@ -56,16 +50,16 @@ xcopy /Y %VCRUNTIME%\lib\x64\msvcp140.dll %OUTPUT%
 xcopy /Y %VCRUNTIME%\lib\x64\msvcp140_1.dll %OUTPUT%
 xcopy /Y %VCRUNTIME%\lib\x64\msvcp140_2.dll %OUTPUT%
 xcopy /Y %VCRUNTIME%\lib\x64\vcruntime140.dll %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS.Hooks\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS.Mount\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS.Service\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS.Service.UI\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\managed\GVFS.Upgrader\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\native\GitHooksLoader\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\native\GVFS.PostIndexChangedHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\native\GVFS.ReadObjectHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
-xcopy /Y /S %BUILD_OUT%\native\GVFS.VirtualFileSystemHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.Hooks\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.Mount\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.Service\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.Service.UI\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.Upgrader\%MANAGED_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GitHooksLoader\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.PostIndexChangedHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.ReadObjectHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
+xcopy /Y /S %BUILD_OUT%\GVFS.VirtualFileSystemHook\%NATIVE_OUT_FRAGMENT%\* %OUTPUT%
 
 ECHO Cleaning up...
 REM Remove unused LibGit2 files

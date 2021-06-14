@@ -8,8 +8,8 @@
     <RepoPath>$(MSBuildThisFileDirectory)</RepoPath>
     <RepoSrcPath>$(RepoPath)</RepoSrcPath>
     <RepoOutPath>$(RepoPath)..\out\</RepoOutPath>
-    <ProjectOutPath>$(RepoOutPath)build\$(MSBuildProjectName)\</ProjectOutPath>
-    <BuildPackagesPath>$(RepoOutPath)build\packages\</BuildPackagesPath>
+    <ProjectOutPath>$(RepoOutPath)$(MSBuildProjectName)\</ProjectOutPath>
+    <BuildPackagesPath>$(RepoOutPath)packages\</BuildPackagesPath>
 
     <!--
       Ensure `msbuild /t:restore` restores both PackageReference and

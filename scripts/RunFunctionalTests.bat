@@ -30,7 +30,7 @@ IF NOT %ERRORLEVEL% == 0 (
     EXIT /b 1
 )
 
-%VFS_BUILDDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.FunctionalTests.exe /result:TestResult.xml %2 %3 %4 %5
+%VFS_OUTDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\GVFS.FunctionalTests.exe /result:TestResult.xml %2 %3 %4 %5
 
 SET error=%ERRORLEVEL%
 CALL %VFS_SCRIPTSDIR%\StopAllServices.bat

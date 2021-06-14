@@ -24,6 +24,9 @@ jobs:
       with:
         dotnet-version: 5.0.201
 
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
     # - name: Disable strong name validation
     #   shell: powershell
     #   run: |
@@ -57,8 +60,14 @@ jobs:
     - name: Upload installers
       uses: actions/upload-artifact@v2
       with:
-        name: Installer_${{ matrix.configuration }}
-        path: ..\publish\GVFS.Installer
+        name: Installers_${{ matrix.configuration }}
+        path: ..\publish\GVFS.Installers
+
+    - name: Upload NuGet packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: NuGetPackages_${{ matrix.configuration }}
+        path: ..\publish\NuGetPackages
 
   functional_test:
     runs-on: windows-2016
@@ -76,7 +85,7 @@ jobs:
     - name: Download installers
       uses: actions/download-artifact@v2
       with:
-        name: Installer_${{ matrix.configuration }}
+        name: Installers_${{ matrix.configuration }}
         path: .\install
 
     - name: Download functional tests drop
@@ -85,7 +94,7 @@ jobs:
         name: FunctionalTests_${{ matrix.configuration }}
         path: .\ft
 
-    - name: Install VFS for Git
+    - name: Install product
       shell: cmd
       run: install\install.bat
 

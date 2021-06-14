@@ -1,7 +1,6 @@
 ﻿using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace GVFS.MSBuild
 {
