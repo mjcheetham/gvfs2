@@ -1,0 +1,95 @@
+name: VFS for Git
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master, releases/shipped ]
+
+jobs:
+  build:
+    runs-on: windows-2016
+    name: Build and Unit Test
+
+    strategy:
+      matrix:
+        configuration: [ Debug, Release ]
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.201
+
+    # - name: Disable strong name validation
+    #   shell: powershell
+    #   run: |
+    #     & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe' -Vr *,31bf3856ad364e35
+    #     & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe' -Vr *,31bf3856ad364e35
+
+    - name: Build VFS for Git (${{ matrix.configuration }})
+      shell: cmd
+      run: scripts\Build.bat ${{ matrix.configuration }}
+
+    - name: Run unit tests (${{ matrix.configuration }})
+      shell: cmd
+      run: scripts\RunUnitTests.bat ${{ matrix.configuration }}
+
+    - name: Create build artifacts
+      shell: cmd
+      run: scripts\CreateBuildArtifacts.bat ${{ matrix.configuration }} ..\publish
+
+    - name: Upload functional tests drop
+      uses: actions/upload-artifact@v2
+      with:
+        name: FunctionalTests_${{ matrix.configuration }}
+        path: ..\publish\GVFS.FunctionalTests
+
+    - name: Upload FastFetch drop
+      uses: actions/upload-artifact@v2
+      with:
+        name: FastFetch_${{ matrix.configuration }}
+        path: ..\publish\FastFetch
+
+    - name: Upload installers
+      uses: actions/upload-artifact@v2
+      with:
+        name: Installer_${{ matrix.configuration }}
+        path: ..\publish\GVFS.Installer
+
+  functional_test:
+    runs-on: windows-2016
+    name: Functional Tests
+    needs: build
+
+    # Only run the fuctional tests on pushes (not PRs)
+    if: ${{ github.event_name == 'push' }}
+
+    strategy:
+      matrix:
+        configuration: [ Debug, Release ]
+
+    steps:
+    - name: Download installers
+      uses: actions/download-artifact@v2
+      with:
+        name: Installer_${{ matrix.configuration }}
+        path: .\install
+
+    - name: Download functional tests drop
+      uses: actions/download-artifact@v2
+      with:
+        name: FunctionalTests_${{ matrix.configuration }}
+        path: .\ft
+
+    - name: Install VFS for Git
+      shell: cmd
+      run: install\install.bat
+
+    - name: Run functional tests (${{ matrix.configuration }})
+      shell: cmd
+      run: |
+        ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs
