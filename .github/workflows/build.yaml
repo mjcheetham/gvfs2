@@ -19,6 +19,13 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v2
 
+    - name: Install Windows SDK 10.0.10240
+      shell: powershell
+      run: |
+        $client = New-Object System.Net.WebClient
+        $client.DownloadFile("https://go.microsoft.com/fwlink/p/?LinkId=619296","$env:TEMP\winsdksetup.exe")
+        Start-Process -Wait "$env:TEMP\winsdksetup.exe" "/features OptionId.WindowsSoftwareDevelopmentKit /q"
+
     - name: Install .NET SDK
       uses: actions/setup-dotnet@v1
       with:
