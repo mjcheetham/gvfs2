@@ -32,7 +32,7 @@ namespace GVFS.FunctionalTests.Properties
 
             public static void Initialize()
             {
-                CurrentDirectory = Path.GetFullPath(System.Reflection.Assembly.GetEntryAssembly()?.CodeBase);
+                CurrentDirectory = Path.GetFullPath(System.Reflection.Assembly.GetEntryAssembly()?.Location);
 
                 RepoToClone = @"https://gvfs.visualstudio.com/ci/_git/ForTests";
 
