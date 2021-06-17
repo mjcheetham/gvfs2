@@ -24,7 +24,7 @@ REM Check MSBuild is on the PATH
 where /q msbuild.exe
 IF ERRORLEVEL 1 (
     ECHO error: missing MSBuild on the PATH
-    GOTO EXIT /B 1
+    EXIT /B 1
 )
 
 ECHO Restoring packages...

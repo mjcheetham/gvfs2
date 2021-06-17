@@ -18,6 +18,11 @@
   <ItemGroup>
     <ProjectReference Include="..\GVFS.Tests\GVFS.Tests.csproj" />
     <ProjectReference Include="..\FastFetch\FastFetch.csproj" />
+    <ProjectReference Include="..\GVFS.FunctionalTests.LockHolder\GVFS.FunctionalTests.LockHolder.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ProjectReference>
     <ProjectReference Include="..\GVFS.NativeTests\GVFS.NativeTests.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
