@@ -1,7 +1,9 @@
-@IF "%_echo%"=="" (ECHO OFF) else (ECHO ON)
+@IF "%_echo%"=="" (ECHO OFF) ELSE (ECHO ON)
 
-CALL :RESOLVEPATH "%~dp0\."
-SET VFS_SCRIPTSDIR=%_PARSED_PATH_%
+REM Set environment variables for interesting paths that scripts might need access to.
+PUSHD %~dp0
+SET VFS_SCRIPTSDIR=%CD%
+POPD
 
 CALL :RESOLVEPATH "%VFS_SCRIPTSDIR%\.."
 SET VFS_SRCDIR=%_PARSED_PATH_%

@@ -19,17 +19,19 @@ IF EXIST %OUTROOT% (
 )
 
 ECHO Collecting GVFS.Installers...
-echo %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\
+mkdir %OUTROOT%\GVFS.Installers\
 xcopy /S /Y ^
     %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\ ^
     %OUTROOT%\GVFS.Installers\ || GOTO ERROR
 
 ECHO Collecting FastFetch...
+mkdir %OUTROOT%\FastFetch\
 xcopy /S /Y ^
     %VFS_OUTDIR%\FastFetch\bin\%CONFIGURATION%\net461\win-x64\ ^
     %OUTROOT%\FastFetch\ || GOTO ERROR
 
 ECHO Collecting GVFS.FunctionalTests...
+mkdir %OUTROOT%\GVFS.FunctionalTests\
 xcopy /S /Y ^
     %VFS_OUTDIR%\GVFS.FunctionalTests\bin\%CONFIGURATION%\net461\win-x64\ ^
     %OUTROOT%\GVFS.FunctionalTests\ || GOTO ERROR
