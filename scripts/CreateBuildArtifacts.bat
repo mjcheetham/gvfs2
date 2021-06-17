@@ -1,4 +1,4 @@
-@ECHO OFF
+REM @ECHO OFF
 CALL %~dp0\InitializeEnvironment.bat || EXIT /b 10
 SETLOCAL
 
@@ -17,6 +17,13 @@ IF "%~2"=="" (
 IF EXIST %OUTROOT% (
   rmdir /s /q %OUTROOT%
 )
+
+ECHO Configuration: %CONFIGURATION%
+ECHO Output Directory: %OUTROOT%
+
+dir %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\
+
+tree %CD%\..
 
 ECHO Collecting GVFS.Installers...
 mkdir %OUTROOT%\GVFS.Installers\
