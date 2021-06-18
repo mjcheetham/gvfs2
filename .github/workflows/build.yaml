@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Checkout source
       uses: actions/checkout@v2
+      with:
+        path: src
 
     - name: Install .NET SDK
       uses: actions/setup-dotnet@v1
@@ -29,39 +31,39 @@ jobs:
 
     - name: Build VFS for Git (${{ matrix.configuration }})
       shell: cmd
-      run: scripts\Build.bat ${{ matrix.configuration }}
+      run: src\scripts\Build.bat ${{ matrix.configuration }}
 
     - name: Run unit tests (${{ matrix.configuration }})
       shell: cmd
-      run: scripts\RunUnitTests.bat ${{ matrix.configuration }}
+      run: src\scripts\RunUnitTests.bat ${{ matrix.configuration }}
 
     - name: Create build artifacts
       shell: cmd
-      run: scripts\CreateBuildArtifacts.bat ${{ matrix.configuration }} ..\publish
+      run: src\scripts\CreateBuildArtifacts.bat ${{ matrix.configuration }} artifacts
 
     - name: Upload functional tests drop
       uses: actions/upload-artifact@v2
       with:
         name: FunctionalTests_${{ matrix.configuration }}
-        path: ..\publish\GVFS.FunctionalTests
+        path: artifacts\GVFS.FunctionalTests
 
     - name: Upload FastFetch drop
       uses: actions/upload-artifact@v2
       with:
         name: FastFetch_${{ matrix.configuration }}
-        path: ..\publish\FastFetch
+        path: artifacts\FastFetch
 
     - name: Upload installers
       uses: actions/upload-artifact@v2
       with:
         name: Installers_${{ matrix.configuration }}
-        path: ..\publish\GVFS.Installers
+        path: artifacts\GVFS.Installers
 
     - name: Upload NuGet packages
       uses: actions/upload-artifact@v2
       with:
         name: NuGetPackages_${{ matrix.configuration }}
-        path: ..\publish\NuGetPackages
+        path: artifacts\NuGetPackages
 
   functional_test:
     runs-on: windows-2016

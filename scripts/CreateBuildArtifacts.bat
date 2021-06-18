@@ -45,9 +45,10 @@ xcopy /S /Y ^
 
 ECHO Create installers NuGet package...
 mkdir %OUTROOT%\NuGetPackages
-PUSHD %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64
-nuget.exe pack GVFS.Installers.nuspec -OutputDirectory %OUTROOT%\NuGetPackages
-POPD
+nuget.exe pack ^
+    %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64\GVFS.Installers.nuspec ^
+    -BasePath %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64 ^
+    -OutputDirectory %OUTROOT%\NuGetPackages
 
 GOTO :EOF
 
