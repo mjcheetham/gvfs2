@@ -91,22 +91,9 @@ jobs:
         name: FunctionalTests_${{ matrix.configuration }}
         path: ft
 
-    # - name: Debugging with tmate
-    #   uses: mxschmitt/action-tmate@v3.5
-
     - name: Install product
       shell: cmd
       run: install\install.bat
-
-    # - name: Install product
-    #   shell: powershell
-    #   run: |
-    #     mkdir logs
-    #     $client = new-object System.Net.WebClient
-    #     $client.DownloadFile("https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/Git-2.31.0.vfs.0.1-64-bit.exe", "setup-git.exe")
-    #     $client.DownloadFile("https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/SetupGVFS.1.0.21085.9.exe", "setup-vfs.exe")
-    #     Start-Process -Wait "setup-git.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=logs\git.log"
-    #     Start-Process -Wait "setup-vfs.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=logs\vfs.log"
 
     - name: Upload installation logs
       uses: actions/upload-artifact@v2
@@ -114,11 +101,14 @@ jobs:
         name: InstallationLogs_${{ matrix.configuration }}
         path: install\logs
 
+    - name: Debugging with tmate
+      uses: mxschmitt/action-tmate@v3.5
+
     - name: Print product versions
       shell: cmd
       run: |
         git version
-        gvfs version
+        "C:\Program Files\GVFS\gvfs.exe" version
 
     - name: Run functional tests (${{ matrix.configuration }})
       shell: cmd
