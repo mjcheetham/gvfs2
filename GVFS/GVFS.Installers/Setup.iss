@@ -60,7 +60,7 @@ Name: "full"; Description: "Full installation"; Flags: iscustom;
 Type: files; Name: "{app}\ucrtbase.dll"
 
 [Files]
-DestDir: "{app}"; Flags: ignoreversion; Source:"{#LayoutDir}\*"
+DestDir: "{app}"; Flags: ignoreversion recursesubdirs; Source:"{#LayoutDir}\*"
 DestDir: "{app}"; Flags: ignoreversion; Source:"{#LayoutDir}\GVFS.Service.exe"; AfterInstall: InstallGVFSService
 
 [Dirs]

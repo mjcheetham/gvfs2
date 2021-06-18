@@ -96,13 +96,11 @@ jobs:
       run: install\install.bat
 
     - name: Upload installation logs
+      if: always()
       uses: actions/upload-artifact@v2
       with:
         name: InstallationLogs_${{ matrix.configuration }}
         path: install\logs
-
-    - name: Debugging with tmate
-      uses: mxschmitt/action-tmate@v3.5
 
     - name: Print product versions
       shell: cmd
@@ -113,4 +111,5 @@ jobs:
     - name: Run functional tests (${{ matrix.configuration }})
       shell: cmd
       run: |
+        SET PATH=C:\Program Files\GVFS;%PATH%
         ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs
