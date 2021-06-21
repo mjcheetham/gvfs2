@@ -29,11 +29,11 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build VFS for Git (${{ matrix.configuration }})
+    - name: Build VFS for Git
       shell: cmd
       run: src\scripts\Build.bat ${{ matrix.configuration }}
 
-    - name: Run unit tests (${{ matrix.configuration }})
+    - name: Run unit tests
       shell: cmd
       run: src\scripts\RunUnitTests.bat ${{ matrix.configuration }}
 
@@ -78,7 +78,6 @@ jobs:
         configuration: [ Debug, Release ]
 
     steps:
-
     - name: Download installers
       uses: actions/download-artifact@v2
       with:
@@ -108,8 +107,15 @@ jobs:
         git version
         "C:\Program Files\GVFS\gvfs.exe" version
 
-    - name: Run functional tests (${{ matrix.configuration }})
+    - name: Run functional tests
       shell: cmd
       run: |
         SET PATH=C:\Program Files\GVFS;%PATH%
         ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs
+
+    - name: Upload functional test results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: FunctionalTests_Results_${{ matrix.configuration }}
+        path: TestResult.xml
