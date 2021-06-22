@@ -113,16 +113,8 @@ namespace GVFS.FunctionalTests.Tools
 
         private static string GetPathToService()
         {
-            ProcessResult result = ProcessHelper.Run("where", Properties.Settings.Default.PathToGVFSService);
-            result.ExitCode.ShouldEqual(0, $"{nameof(GetPathToService)}: where returned {result.ExitCode} when looking for {Properties.Settings.Default.PathToGVFSService}");
-
-            string firstPath =
-                string.IsNullOrWhiteSpace(result.Output)
-                ? null
-                : result.Output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-
-            firstPath.ShouldNotBeNull($"{nameof(GetPathToService)}: Failed to find {Properties.Settings.Default.PathToGVFSService}");
-            return firstPath;
+            File.Exists(Properties.Settings.Default.PathToGVFSService).ShouldBeTrue("Failed to locate GVFS.Service.exe");
+            return Properties.Settings.Default.PathToGVFSService;
         }
     }
 }

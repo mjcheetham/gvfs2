@@ -13,6 +13,11 @@ namespace GVFS.FunctionalTests
         public static void Main(string[] args)
         {
             Properties.Settings.Default.Initialize();
+            Console.WriteLine("Settings.Default.CurrentDirectory: {0}", Settings.Default.CurrentDirectory);
+            Console.WriteLine("Settings.Default.PathToGit: {0}", Settings.Default.PathToGit);
+            Console.WriteLine("Settings.Default.PathToGVFS: {0}", Settings.Default.PathToGVFS);
+            Console.WriteLine("Settings.Default.PathToGVFSService: {0}", Settings.Default.PathToGVFSService);
+
             NUnitRunner runner = new NUnitRunner(args);
             runner.AddGlobalSetupIfNeeded("GVFS.FunctionalTests.GlobalSetup");
 

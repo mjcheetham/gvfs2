@@ -50,6 +50,10 @@ nuget.exe pack ^
     -BasePath %VFS_OUTDIR%\GVFS.Installers\bin\%CONFIGURATION%\win-x64 ^
     -OutputDirectory %OUTROOT%\NuGetPackages
 
+REM Move the nuspec file to the NuGetPackages artifact directory
+move %OUTROOT%\GVFS.Installers\GVFS.Installers.nuspec ^
+    %OUTROOT%\NuGetPackages
+
 GOTO :EOF
 
 :USAGE
