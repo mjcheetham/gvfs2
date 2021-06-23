@@ -90,9 +90,17 @@ jobs:
         name: FunctionalTests_${{ matrix.configuration }}
         path: ft
 
+    - name: ProjFS details (pre-install)
+      shell: cmd
+      run: install\info.bat
+
     - name: Install product
       shell: cmd
       run: install\install.bat
+
+    - name: ProjFS details (post-install)
+      shell: cmd
+      run: install\info.bat
 
     - name: Upload installation logs
       if: always()

@@ -27,6 +27,7 @@
     <Content Include="$(PkgGitForWindows_GVFS_Installer)\tools\*" />
     <Content Include="$(PkgGitForWindows_GVFS_Portable)\tools\*" />
     <Content Include="install.bat" />
+    <Content Include="info.bat" />
     <NuspecTemplate Include="GVFS.Installers.template.nuspec"
                     TargetPath="GVFS.Installers.nuspec"
                     Properties="$version$=$(GVFSVersion)" />
