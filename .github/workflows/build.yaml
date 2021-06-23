@@ -127,3 +127,8 @@ jobs:
       with:
         name: FunctionalTests_Results_${{ matrix.configuration }}
         path: TestResult.xml
+
+    - name: ProjFS details (post-test)
+      if: always()
+      shell: cmd
+      run: install\info.bat
