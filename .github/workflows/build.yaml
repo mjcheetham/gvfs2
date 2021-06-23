@@ -109,18 +109,12 @@ jobs:
         name: InstallationLogs_${{ matrix.configuration }}
         path: install\logs
 
-    - name: Print product versions
-      shell: cmd
-      run: |
-        git version
-        "C:\Program Files\GVFS\gvfs.exe" version
-
     - name: Run functional tests
       shell: cmd
       run: |
         SET PATH=C:\Program Files\GVFS;%PATH%
         SET GIT_TRACE2=C:\temp\git-trace2.log
-        ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs /test:GVFS.FunctionalTests.Tests.EnlistmentPerTestCase.LooseObjectStepTests.CorruptLooseObjectIsDeleted
+        ft\GVFS.FunctionalTests.exe /result:TestResult.xml /test:GVFS.FunctionalTests.Tests.EnlistmentPerTestCase.LooseObjectStepTests.CorruptLooseObjectIsDeleted
 
     - name: Upload functional test results
       if: always()
