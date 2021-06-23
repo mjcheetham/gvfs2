@@ -119,6 +119,7 @@ jobs:
       shell: cmd
       run: |
         SET PATH=C:\Program Files\GVFS;%PATH%
+        SET GIT_TRACE2=%CD%\git-trace2.log
         ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs /test:GVFS.FunctionalTests.Tests.EnlistmentPerTestCase.LooseObjectStepTests.CorruptLooseObjectIsDeleted
 
     - name: Upload functional test results
@@ -128,7 +129,18 @@ jobs:
         name: FunctionalTests_Results_${{ matrix.configuration }}
         path: TestResult.xml
 
+    - name: Upload Git trace2 output
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: GitTrace2_${{ matrix.configuration }}
+        path: git-trace2.log
+
     - name: ProjFS details (post-test)
       if: always()
       shell: cmd
       run: install\info.bat
+
+    - name: Debugging with tmate
+      uses: mxschmitt/action-tmate@v3.5
+
