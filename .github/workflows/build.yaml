@@ -111,7 +111,7 @@ jobs:
       shell: cmd
       run: |
         SET PATH=C:\Program Files\GVFS;%PATH%
-        ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs
+        ft\GVFS.FunctionalTests.exe /result:TestResult.xml --replace-inbox-projfs /test:GVFS.FunctionalTests.Tests.EnlistmentPerFixture.PrefetchVerbTests.PrefetchFilesFromFileListStdIn /test:GVFS.FunctionalTests.Tests.EnlistmentPerTestCase.LooseObjectStepTests
 
     - name: Upload functional test results
       if: always()
