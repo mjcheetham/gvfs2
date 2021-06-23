@@ -102,8 +102,13 @@ jobs:
         $client = New-Object System.Net.WebClient
         $client.DownloadFile($git, $env:TEMP + "\setup-git.exe")
         $client.DownloadFile($gvfs, $env:TEMP + "\setup-gvfs.exe")
-        Start-Process -Wait ($env:TEMP + "\setup-git.exe") "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /ALLOWDOWNGRADE=1"
-        Start-Process -Wait ($env:TEMP + "\setup-gvfs.exe") "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
+
+    # Start-Process -Wait ($env:TEMP + "\setup-git.exe") "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /ALLOWDOWNGRADE=1"
+    # Start-Process -Wait ($env:TEMP + "\setup-gvfs.exe") "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
+
+    - name: Debugging with tmate
+      if: always()
+      uses: mxschmitt/action-tmate@v3.5
 
     # - name: Install product
     #   shell: cmd
@@ -145,8 +150,4 @@ jobs:
       if: always()
       shell: cmd
       run: install\info.bat
-
-    # - name: Debugging with tmate
-    #   if: always()
-    #   uses: mxschmitt/action-tmate@v3.5
 
