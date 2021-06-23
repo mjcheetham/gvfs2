@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
 {

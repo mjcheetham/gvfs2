@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace GVFS.FunctionalTests.Tools
 {
