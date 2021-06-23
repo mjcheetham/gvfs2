@@ -53,6 +53,7 @@ IF EXIST "%VFS_BUND_PROJFSLIB%" (
     ECHO [MISSING] %VFS_BUND_PROJFSLIB%
 )
 
+ECHO.
 ECHO Print product versions...
 IF EXIST "%VFS_EXEC%" (
     "%VFS_EXEC%" version
