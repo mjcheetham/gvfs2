@@ -79,6 +79,13 @@ namespace GVFS.FunctionalTests
                     excludeCategories.Add(Categories.ExtraCoverage);
                 }
 
+                // If we're running in CI exclude tests that are currently
+                // flakey or broken when run in a CI environment.
+                if (runner.HasCustomArg("--ci"))
+                {
+                    excludeCategories.Add(Categories.NeedsReactionInCI);
+                }
+
                 GVFSTestConfig.FileSystemRunners = FileSystemRunners.FileSystemRunner.DefaultRunners;
             }
 

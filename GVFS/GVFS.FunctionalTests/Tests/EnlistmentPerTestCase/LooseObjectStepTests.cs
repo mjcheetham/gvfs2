@@ -29,6 +29,7 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
         private string TempPackRoot => Path.Combine(this.PackRoot, TempPackFolder);
 
         [TestCase]
+        [Category(Categories.NeedsReactionInCI)]
         public void RemoveLooseObjectsInPackFiles()
         {
             this.ClearAllObjects();
@@ -48,6 +49,7 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
         }
 
         [TestCase]
+        [Category(Categories.NeedsReactionInCI)]
         public void PutLooseObjectsInPackFiles()
         {
             this.ClearAllObjects();
@@ -84,6 +86,7 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
         }
 
         [TestCase]
+        [Category(Categories.NeedsReactionInCI)]
         public void CorruptLooseObjectIsDeleted()
         {
             this.ClearAllObjects();
