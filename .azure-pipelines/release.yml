@@ -18,7 +18,6 @@ jobs:
   steps:
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: Install signing plugin
-    condition: and(succeeded(), eq(variables['SignType'], 'real'))
     inputs:
       signType: '$(SignType)'
 
@@ -48,16 +47,16 @@ jobs:
     inputs:
       PathtoPublish: $(Build.ArtifactStagingDirectory)\NuGetPackages
       ArtifactName: Installer
-      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: FastFetch'
     inputs:
-      PathtoPublish: $(Agent.ArtifactStagingDirectory)\FastFetch\
+      PathtoPublish: $(Build.ArtifactStagingDirectory)\FastFetch
       ArtifactName: FastFetch
 
   - task: PublishSymbols@1
     displayName: Enable Source Server
+    condition: eq(succeeded(), eq(variables['signType'], 'real'))
     inputs:
       SearchPattern: '**\*.pdb'
       SymbolsFolder: $(Build.ArtifactStagingDirectory)\Symbols
@@ -65,7 +64,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Symbols'
     inputs:
-      PathtoPublish: $(Build.ArtifactStagingDirectory)/Symbols
+      PathtoPublish: $(Build.ArtifactStagingDirectory)\Symbols
       ArtifactName: Symbols
 
   - task: ms-vscs-artifact.build-tasks.artifactSymbolTask-1.artifactSymbolTask@0
@@ -79,6 +78,7 @@ jobs:
 
   - task: NuGetCommand@2
     displayName: Push GVFS.Installers package
+    condition: eq(succeeded(), eq(variables['signType'], 'real'))
     inputs:
       command: push
       packagesToPush: $(Build.ArtifactStagingDirectory)\NuGetPackages\GVFS.Installers.*.nupkg
