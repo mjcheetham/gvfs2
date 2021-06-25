@@ -25,6 +25,14 @@ IF EXIST %OUTROOT% (
   rmdir /s /q %OUTROOT%
 )
 
+ECHO Collecting symbols...
+mkdir %OUTROOT%\Symbols
+SET COPY_SYM_CMD="&{Get-ChildItem -Recurse -Path '%VFS_OUTDIR%' -Include *.pdb | Where-Object FullName -Match '\\bin\\.*\\?%CONFIGURATION%\\' | Copy-Item -Destination '%OUTROOT%\Symbols'}"
+powershell ^
+    -NoProfile ^
+    -ExecutionPolicy Bypass ^
+    -Command %COPY_SYM_CMD% || GOTO ERROR
+
 ECHO Collecting GVFS.Installers...
 mkdir %OUTROOT%\GVFS.Installers
 xcopy /S /Y ^

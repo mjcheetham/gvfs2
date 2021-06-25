@@ -9,7 +9,7 @@
     <RepoSrcPath>$(RepoPath)</RepoSrcPath>
     <RepoOutPath>$(RepoPath)..\out\</RepoOutPath>
     <ProjectOutPath>$(RepoOutPath)$(MSBuildProjectName)\</ProjectOutPath>
-    <BuildPackagesPath>$(RepoOutPath)packages\</BuildPackagesPath>
+    <BuildPackagesPath>$(RepoPath)..\packages\</BuildPackagesPath>
 
     <!--
       Ensure `msbuild /t:restore` restores both PackageReference and
