@@ -28,20 +28,20 @@ jobs:
       packageType: sdk
       version: 5.0.201
 
-  - task: CmdLine@1
+  - task: CmdLine@2
     displayName: Build VFS for Git
     inputs:
-      filename: $(Build.Repository.LocalPath)\scripts\Build.bat $(configuration) $(GVFSMajorAndMinorVersion).$(GVFSRevision)
+      script: $(Build.Repository.LocalPath)\scripts\Build.bat $(configuration) $(GVFSMajorAndMinorVersion).$(GVFSRevision)
 
-  - task: CmdLine@1
+  - task: CmdLine@2
     displayName: Run unit tests
     inputs:
-      filename: $(Build.Repository.LocalPath)\scripts\RunUnitTests.bat $(configuration)
+      script: $(Build.Repository.LocalPath)\scripts\RunUnitTests.bat $(configuration)
 
-  - task: CmdLine@1
+  - task: CmdLine@2
     displayName: Create build artifacts
     inputs:
-      filename: $(Build.Repository.LocalPath)\scripts\CreateBuildArtifacts.bat $(configuration) $(Build.ArtifactStagingDirectory)
+      script: $(Build.Repository.LocalPath)\scripts\CreateBuildArtifacts.bat $(configuration) $(Build.ArtifactStagingDirectory)
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Installer'
