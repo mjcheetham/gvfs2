@@ -30,7 +30,7 @@ jobs:
   - task: CmdLine@2
     displayName: Build VFS for Git
     inputs:
-      script: $(Build.Repository.LocalPath)\scripts\Build.bat $(configuration) $(GVFSMajorAndMinorVersion).$(GVFSRevision)
+      script: $(Build.Repository.LocalPath)\scripts\Build.bat $(configuration) $(GVFSMajorAndMinorVersion).$(GVFSRevision) detailed
 
   - task: CmdLine@2
     displayName: Run unit tests

@@ -29,7 +29,7 @@
     <ProjectReference Include="..\GVFS\GVFS.csproj" />
   </ItemGroup>
 
-  <Target Name="CreatePayload" BeforeTargets="AfterBuild">
+  <Target Name="CreatePayload" BeforeTargets="CoreCompile;SignFiles">
     <Exec Command="$(MSBuildThisFileDirectory)layout.bat $(Configuration) $(GVFSVersion) $(PkgGVFS_ProjFS) $(PkgGVFS_VCRuntime) $(OutputPath)" />
   </Target>
 

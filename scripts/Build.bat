@@ -28,8 +28,8 @@ FOR /F "tokens=* USEBACKQ" %%F IN (`where msbuild.exe`) DO (
     GOTO :BUILD
 )
 
-REM Locate MSBuild via the vswhere tool
 :LOCATE_MSBUILD
+REM Locate MSBuild via the vswhere tool
 FOR /F "tokens=* USEBACKQ" %%F IN (`where nuget.exe`) DO (
     SET NUGET_EXEC=%%F
     ECHO INFO: Found nuget.exe at '%%F'
