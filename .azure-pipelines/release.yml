@@ -1,3 +1,6 @@
+# NOTE: this pipeline definition is not currently used to build releases of VFS for Git.
+# This is still done in the GVFS-Release-RealSign "classic" pipeline.
+
 name: $(date:yy)$(DayOfYear)$(rev:.r)
 
 variables:
